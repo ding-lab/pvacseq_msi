@@ -1,4 +1,5 @@
-FROM continuumio/miniconda3:4.7.12 as conda
+FROM continuumio/miniconda3:4.7.12
+
 LABEL maintainer="Wen-Wei Liang <liang.w@wustl.edu>"
 
 # Configure locale and timezone
@@ -14,6 +15,3 @@ RUN conda config --add channels defaults \
         pandas=1.0.1 \
         scipy \
     && conda clean -y --all
-
-#FROM ensemblorg/ensembl-vep:release_97.4 as vep
-#COPY --from=conda /
