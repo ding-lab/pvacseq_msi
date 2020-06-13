@@ -1,0 +1,40 @@
+Building DAG of jobs...
+Job counts:
+	count	jobs
+	1	all
+	1	chi
+	1	dis2vcf
+	1	vep
+	4
+
+[Fri Jun 12 18:43:41 2020]
+rule chi:
+    input: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/input/UCEC/C3L-00006_dis.gz
+    output: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis
+    log: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/logs/C3L-00006.chi.log
+    jobid: 3
+    wildcards: sample=C3L-00006
+
+zcat /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/input/UCEC/C3L-00006_dis.gz | python scripts/chi.py - /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis
+
+[Fri Jun 12 18:43:41 2020]
+rule dis2vcf:
+    input: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis
+    output: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vcf
+    log: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/logs/C3L-00006.dis2vcf.log
+    jobid: 2
+    wildcards: sample=C3L-00006
+
+perl scripts/MSISensor2Vepvcf.pl /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vcf
+
+[Fri Jun 12 18:43:41 2020]
+rule vep:
+    input: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vcf, /diskmnt/Datasets/Reference/GRCh38.d1.vd1/GRCh38.d1.vd1.fa
+    output: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vep.vcf
+    log: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/logs/C3L-00006.vep.log
+    jobid: 1
+    wildcards: sample=C3L-00006
+
+WildcardError in line 37 of /diskmnt/Projects/Users/wliang/MSIsensor2/pvacseq_msi/Snakefile:
+Wildcards in params cannot be determined from output files. Note that you have to use a function to deactivate automatic wildcard expansion in params strings, e.g., `lambda wildcards: '{test}'`. Also see https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#non-file-parameters-for-rules:
+'VEP'

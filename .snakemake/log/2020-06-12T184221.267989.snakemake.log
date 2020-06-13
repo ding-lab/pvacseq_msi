@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 37 of /diskmnt/Projects/Users/wliang/MSIsensor2/pvacseq_msi/Snakefile:
+Missing input files for rule vep:
+GRCh38

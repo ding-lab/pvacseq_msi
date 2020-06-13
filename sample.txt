@@ -1,0 +1,2 @@
+sample	reference	dispath	refpath	hla_type
+C3L-00006	GRCh38	/diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/input/UCEC/C3L-00006_dis.gz	/diskmnt/Datasets/Reference/GRCh38.d1.vd1/GRCh38.d1.vd1.fa

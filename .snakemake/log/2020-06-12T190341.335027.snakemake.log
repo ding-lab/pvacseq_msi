@@ -1,0 +1,74 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	chi
+	1	dis2vcf
+	1	unzip
+	1	vep
+	5
+
+[Fri Jun 12 19:03:41 2020]
+rule unzip:
+    input: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/input/UCEC/C3L-00006_dis.gz
+    output: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006_dis
+    jobid: 4
+    wildcards: sample=C3L-00006
+
+zcat /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/input/UCEC/C3L-00006_dis.gz > /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006_dis
+[Fri Jun 12 19:03:46 2020]
+Finished job 4.
+1 of 5 steps (20%) done
+
+[Fri Jun 12 19:03:46 2020]
+rule chi:
+    input: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006_dis
+    output: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis
+    log: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/logs/C3L-00006.chi.log
+    jobid: 3
+    wildcards: sample=C3L-00006
+
+python scripts/chi.py /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006_dis /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis
+Removing temporary output file /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006_dis.
+[Fri Jun 12 19:04:26 2020]
+Finished job 3.
+2 of 5 steps (40%) done
+
+[Fri Jun 12 19:04:26 2020]
+rule dis2vcf:
+    input: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis
+    output: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vcf
+    log: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/logs/C3L-00006.dis2vcf.log
+    jobid: 2
+    wildcards: sample=C3L-00006
+
+perl scripts/MSISensor2Vepvcf.pl /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vcf
+Removing temporary output file /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi_dis.
+[Fri Jun 12 19:04:27 2020]
+Finished job 2.
+3 of 5 steps (60%) done
+
+[Fri Jun 12 19:04:27 2020]
+rule vep:
+    input: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vcf, /diskmnt/Datasets/Reference/GRCh38.d1.vd1/GRCh38.d1.vd1.fa
+    output: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vep.vcf
+    log: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/logs/C3L-00006.vep.log
+    jobid: 1
+    wildcards: sample=C3L-00006
+
+vep --input_file /data/C3L-00006.chi.vcf              --output_file /data/C3L-00006.chi.vcf.vcf              --assembly GRCh38              --fasta /diskmnt/Datasets/Reference/GRCh38.d1.vd1/GRCh38.d1.vd1.fa              --force_overwrite --species homo_sapiens --cache --check_ref              --dir /diskmnt/Datasets/VEP/              --vcf --offline --symbol --terms SO --tsl --hgvs --plugin Downstream --plugin Wildtype --format vcf
+[Fri Jun 12 19:04:27 2020]
+Error in rule vep:
+    jobid: 1
+    output: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/C3L-00006.chi.vep.vcf
+    log: /diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/logs/C3L-00006.vep.log (check log file(s) for error message)
+    shell:
+        vep --input_file /data/C3L-00006.chi.vcf              --output_file /data/C3L-00006.chi.vcf.vcf              --assembly GRCh38              --fasta /diskmnt/Datasets/Reference/GRCh38.d1.vd1/GRCh38.d1.vd1.fa              --force_overwrite --species homo_sapiens --cache --check_ref              --dir /diskmnt/Datasets/VEP/              --vcf --offline --symbol --terms SO --tsl --hgvs --plugin Downstream --plugin Wildtype --format vcf
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /diskmnt/Projects/Users/wliang/MSIsensor2/pvacseq_msi/.snakemake/log/2020-06-12T190341.335027.snakemake.log

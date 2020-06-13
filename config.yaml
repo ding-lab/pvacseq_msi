@@ -1,0 +1,3 @@
+samples: sample.txt
+path2vep: "/diskmnt/Datasets/VEP/"
+path2output: "/diskmnt/Projects/Users/wliang/MSIsensor2/03_msi2vcf/output/"
