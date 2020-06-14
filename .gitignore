@@ -1,3 +1,4 @@
 .snakemake/
 deleted_msi_sites
 sandbox/
+sample.txt

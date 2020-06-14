@@ -55,7 +55,7 @@ rule vep:
         o = "/data/{sample}.chi.vcf.vcf",
         veppath = f"{VEP}",
         ref = lambda wildcards: REF_DICT[wildcards.sample]
-    singularity: 
+    container:
         "docker://ensemblorg/ensembl-vep:release_97.4"
     shell:
         "vep --input_file {params.i} \
@@ -83,4 +83,4 @@ rule pvacseq:
 
 rule all:
     input: 
-        expand(f"{OUTPUT}{{sample}}.chi.vep.vcf", sample=SAMPLE)
+        expand(f"{OUTPUT}{{sample}}.chi.vcf", sample=SAMPLE)
